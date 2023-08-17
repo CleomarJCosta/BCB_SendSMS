@@ -22,7 +22,7 @@ import java.util.List;
 public class CustomerDTO {
     private Long Id;
 
-    private double limit;
+    private double customerLimit;
 
     private double credit;
 

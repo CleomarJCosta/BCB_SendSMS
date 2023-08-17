@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
 @NoArgsConstructor
 @Data
 public class Customer {
@@ -18,7 +17,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Message> messages = new ArrayList<>();
     @Column
-    private double limit;
+    private double customerLimit;
     @Column
     private double credit;
     @Column

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude
 public class MessageDTO {
-    private Long id;
+    private Long idCustomer;
     private Customer customer;
     private String numberTelephone;
     private boolean isWhatsApp = false;

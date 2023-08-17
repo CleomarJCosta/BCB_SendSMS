@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idCustomer;
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

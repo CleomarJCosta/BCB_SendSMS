@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class BackofficeServiceImpl implements BackofficeService {
 
@@ -24,7 +26,8 @@ public class BackofficeServiceImpl implements BackofficeService {
 
     private Customer mapDTOToCustomer(CustomerDTO customerDTO) {
         Customer customer = new Customer();
-        customer.setLimit(customerDTO.getLimit());
+
+        customer.setCustomerLimit(customerDTO.getCustomerLimit());
         customer.setCredit(customerDTO.getCredit());
         customer.setPlan(customerDTO.getPlan());
         customer.setBalance(customerDTO.getBalance());
@@ -33,8 +36,9 @@ public class BackofficeServiceImpl implements BackofficeService {
         customer.setCustomerCNPJ(customerDTO.getCustomerCNPJ());
         customer.setCustomerCompanyName(customerDTO.getCustomerCompanyName());
         customer.setCustomerNumberTelephone(customerDTO.getCustomerNumberTelephone());
-        return customer;
+        customer.setMessages(customerDTO.getMessages());
 
+        return customer;
     }
 
     public void includeCredit(Long customerId, double value){
@@ -57,14 +61,24 @@ public class BackofficeServiceImpl implements BackofficeService {
     public void alterLimit(Long customerId, double limit) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow( () -> new RuntimeException("Customer not found"));
-        customer.setLimit(limit);
+        customer.setCustomerLimit(limit);
         customerRepository.save(customer);
     }
 
+
     @Override
-    public List<CustomerDTO> seeCustomerData() {
-        List<Customer> customers = customerRepository.findAll();
-        return convertToDTOList(customers);
+    public double checkBalance(Long customerId) {
+        double value = 0;
+         Customer customer = customerRepository.findById(customerId)
+                 .orElseThrow(()->new RuntimeException("Customer not found"));
+         value = customer.getBalance();
+        return value;
+    }
+
+    @Override
+    public Customer seeCustomerData(Long customerId) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        return customer.get();
     }
 
     private List<CustomerDTO> convertToDTOList(List<Customer> customers) {
@@ -78,7 +92,7 @@ public class BackofficeServiceImpl implements BackofficeService {
     private CustomerDTO convertToDTO(Customer customer) {
         return CustomerDTO.builder()
                 .Id(customer.getId())
-                .limit(customer.getLimit())
+                .customerLimit(customer.getCustomerLimit())
                 .credit(customer.getCredit())
                 .plan(customer.getPlan())
                 .balance(customer.getBalance())
@@ -90,50 +104,9 @@ public class BackofficeServiceImpl implements BackofficeService {
                 .build();
     }
 
-    @Override
-    public double checkBalance() {
-        return 0;
-    }
 
-    @Override
-    public void sendSMS(MessageDTO messageDTO, CustomerDTO customerDTO) {
-        Long customerId = customerDTO.getId();
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
 
-        if ("pre-pago".equalsIgnoreCase(customer.getPlan())) {
-            if (customer.getCredit() >= 0.25) {
-                customer.setCredit(customer.getCredit() - 0.25);
-                saveMessage(messageDTO, customerDTO);
 
-            } else {
-                throw new RuntimeException("Insufficient credits for sending SMS.");
-            }
-        } else if ("pós-pago".equalsIgnoreCase(customer.getPlan())) {
-            if (customer.getBalance() + 0.25 <= customer.getLimit()) {
-                customer.setBalance(customer.getBalance() + 0.25);
-                saveMessage(messageDTO, customerDTO);
-
-            } else {
-                throw new RuntimeException("Exceeded balance limit for sending SMS.");
-            }
-        } else {
-            throw new RuntimeException("Invalid customer plan.");
-        }
-    }
-
-    private void saveMessage(MessageDTO messageDTO, CustomerDTO customerDTO) {
-        Message newMessage = new Message();
-        newMessage = mapDTOToMessage(messageDTO);
-
-        Customer customer = new Customer();
-        customer = mapDTOToCustomer(customerDTO);
-
-        customer.getMessages().add(newMessage);
-        newMessage.setCustomer(mapDTOToCustomer(customerDTO));
-
-        customerRepository.save(customer);
-    }
 
     private CustomerDTO mapCustomerToDTO(Customer customer){
         return CustomerDTO.builder()
@@ -145,14 +118,14 @@ public class BackofficeServiceImpl implements BackofficeService {
                 .customerNumberTelephone(customer.getCustomerNumberTelephone())
                 .customerCompanyName(customer.getCustomerCompanyName())
                 .balance(customer.getBalance())
-                .limit(customer.getLimit())
+                .customerLimit(customer.getCustomerLimit())
                 .plan(customer.getPlan())
                 .build();
     }
 
     private MessageDTO mapMessageToDTO(Message message){
        return MessageDTO.builder()
-               .id(message.getId())
+               .idCustomer(message.getIdCustomer())
                .text(message.getText())
                .customer(message.getCustomer())
                .isWhatsApp(message.isWhatsApp())
@@ -164,7 +137,6 @@ public class BackofficeServiceImpl implements BackofficeService {
         message.setText(messageDTO.getText());
         message.setCustomer(messageDTO.getCustomer());
         message.setWhatsApp(message.isWhatsApp());
-        // Set other message properties as needed
         return message;
     }
 
