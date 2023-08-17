@@ -1,6 +1,8 @@
 # BCB_SendSMS
 
 Instalar postgres ou via docker com o seguinte comando:
+
+
 docker run -d \
   --name sendsms-postgres \
   -e POSTGRES_DB=SendSMS \
