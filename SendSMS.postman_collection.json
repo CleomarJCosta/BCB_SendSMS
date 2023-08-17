@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "1f7bde58-086d-45e4-bf01-0725e8511f40",
+		"name": "SendSMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11731373",
+		"_collection_link": "https://universal-meadow-826761.postman.co/workspace/My-Workspace~2d71738e-c78a-447b-8a46-e15b74aaeaa1/collection/11731373-1f7bde58-086d-45e4-bf01-0725e8511f40?action=share&creator=11731373&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n  \"customerName\": \"Nome do Cliente\",\r\n  \"customerCPF\": \"12345678900\",\r\n  \"customerCNPJ\": \"12345678901234\",\r\n  \"customerCompanyName\": \"Nome da Empresa\",\r\n  \"customerNumberTelephone\": \"123456789\",\r\n  \"limit\": 100,\r\n  \"credit\": 50.0,\r\n  \"plan\": \"pre-pago\",\r\n  \"balance\": 30.0\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/backoffice/customer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"backoffice",
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alter Plan",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n  \"customerName\": \"Nome do Cliente\",\r\n  \"customerCPF\": \"12345678900\",\r\n  \"customerCNPJ\": \"12345678901234\",\r\n  \"customerCompanyName\": \"Nome da Empresa\",\r\n  \"customerNumberTelephone\": \"123456789\",\r\n  \"limit\": 100.0,\r\n  \"credit\": 50.0,\r\n  \"plan\": \"pre-pago\",\r\n  \"balance\": 30.0\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/backoffice/plan/11?newPlan=pos-pago",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"backoffice",
+						"plan",
+						"11"
+					],
+					"query": [
+						{
+							"key": "newPlan",
+							"value": "pos-pago"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alter Limit",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n  \"customerName\": \"Nome do Cliente\",\r\n  \"customerCPF\": \"12345678900\",\r\n  \"customerCNPJ\": \"12345678901234\",\r\n  \"customerCompanyName\": \"Nome da Empresa\",\r\n  \"customerNumberTelephone\": \"123456789\",\r\n  \"newLimit\": 100,\r\n  \"credit\": 50.0,\r\n  \"plan\": \"pre-pago\",\r\n  \"balance\": 30.0\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/backoffice/limit/9?newLimit=1000.0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"backoffice",
+						"limit",
+						"9"
+					],
+					"query": [
+						{
+							"key": "newLimit",
+							"value": "1000.0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Balance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n  \"customerName\": \"Nome do Cliente\",\r\n  \"customerCPF\": \"12345678900\",\r\n  \"customerCNPJ\": \"12345678901234\",\r\n  \"customerCompanyName\": \"Nome da Empresa\",\r\n  \"customerNumberTelephone\": \"123456789\",\r\n  \"limit\": 100.0,\r\n  \"credit\": 50.0,\r\n  \"plan\": \"pre-pago\",\r\n  \"balance\": 30.0\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/backoffice/balance/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"backoffice",
+						"balance",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Include Credit",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n  \"customerName\": \"Nome do Cliente\",\r\n  \"customerCPF\": \"12345678900\",\r\n  \"customerCNPJ\": \"12345678901234\",\r\n  \"customerCompanyName\": \"Nome da Empresa\",\r\n  \"customerNumberTelephone\": \"123456789\",\r\n  \"limit\": 100.0,\r\n  \"credit\": 50.0,\r\n  \"plan\": \"pre-pago\",\r\n  \"balance\": 30.0\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/backoffice/credit/8?value=250",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"backoffice",
+						"credit",
+						"8"
+					],
+					"query": [
+						{
+							"key": "value",
+							"value": "250"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customer",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n  \"customerName\": \"Nome do Cliente\",\r\n  \"customerCPF\": \"12345678900\",\r\n  \"customerCNPJ\": \"12345678901234\",\r\n  \"customerCompanyName\": \"Nome da Empresa\",\r\n  \"customerNumberTelephone\": \"123456789\",\r\n  \"limit\": 100.0,\r\n  \"credit\": 50.0,\r\n  \"plan\": \"pre-pago\",\r\n  \"balance\": 30.0\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/backoffice/customer/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"backoffice",
+						"customer",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send-SMS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCustomer\":9,\r\n    \"numberTelephone\": \"1234567890\",\r\n    \"isWhatsApp\": true,\r\n    \"text\": \"Hello, this is a test message.\"\r\n  \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/backoffice/send-sms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"backoffice",
+						"send-sms"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
