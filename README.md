@@ -10,3 +10,7 @@ docker run -d \
   -e POSTGRES_PASSWORD=postgres \
   -p 5433:5432 \
   postgres:latest
+
+
+-----> Collection para teste de requisição se encontra na raiz do projeto 
+com o nome "SendSMS.postman_collection.json"
