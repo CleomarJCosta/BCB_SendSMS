@@ -14,3 +14,9 @@ docker run -d \
 
 -----> Collection para teste de requisição se encontra na raiz do projeto 
 com o nome "SendSMS.postman_collection.json"
+
+
+Usando Docker Compose 
+-> Rodar um jar :
+  - mvn clean compile
+  - mvn clean install -DskipTests
