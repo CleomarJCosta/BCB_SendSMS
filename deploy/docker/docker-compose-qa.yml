@@ -29,16 +29,17 @@ services:
     networks:
       - docker-network
     restart: always
+
   sendsms:
     container_name: sendsms-app
     image: sendsms-app
-    build: .
-    ports:
-      - 8080:8080
+    build: ../..
     environment:
-        - DATABASE_URL=jdbc:postgresql://postgres-db:5432/SendSMS
-        - DATABASE_USERNAME=postgres
-        - DATABASE_PASSWORD=postgres
+         SPRING_PROFILES_ACTIVE : qa
+         DATABASE_URL: jdbc:postgresql://postgres-db:5432/SendSMS
+         DATABASE_USERNAME: postgres
+         DATABASE_PASSWORD : postgres
+         SERVER_PORT : 3000
     depends_on:
       - postgres-db
     networks:

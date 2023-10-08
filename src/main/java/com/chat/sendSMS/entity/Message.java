@@ -18,6 +18,8 @@ public class Message {
     private String numberTelephone;
     @Column
     private boolean isWhatsApp;
+    @Column
+    private String text;
 
     public boolean isWhatsApp() {
         return isWhatsApp;
@@ -27,8 +29,7 @@ public class Message {
         isWhatsApp = whatsApp;
     }
 
-    @Column
-    private String text;
+
 
 
 
